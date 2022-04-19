@@ -19,6 +19,7 @@ DEBUG = os.environ.get("DEBUG") or 1
 print("Debug = " + DEBUG)
 
 
+# (Optional method)
 def __get_decrypted_value_aws(value: str) -> str:
     # Use only for PROD mode
     # Decrypt code should run once and variables stored outside of the function
@@ -29,6 +30,7 @@ def __get_decrypted_value_aws(value: str) -> str:
     )['Plaintext'].decode('utf-8')
 
 
+# (Optional method)
 def __get_storage_password(storage_name: str) -> str:
     tokens = [True, 'true', 'True', '1', 1]
     if DEBUG in tokens:
@@ -37,6 +39,7 @@ def __get_storage_password(storage_name: str) -> str:
         return __get_decrypted_value_aws(os.environ.get(storage_name))
 
 
+# (Optional method)
 def __get_postgres_client() -> psycopg2.connect:
     connection = psycopg2.connect(
         host=os.environ.get('POSTGRES_HOST') or 'postgres',
@@ -50,6 +53,7 @@ def __get_postgres_client() -> psycopg2.connect:
     return cursor
 
 
+# (Optional method)
 def __get_clickhouse_client() -> Database:
     clickhouse_db = Database(
         db_name=os.environ.get('CLICKHOUSE_DB') or 'clickhouse',
@@ -61,7 +65,7 @@ def __get_clickhouse_client() -> Database:
     return clickhouse_db
 
 
-# modify this methods
+# modify this methods (Optional method)
 def handle_storage():
     start_date = datetime.now(tz=pytz.timezone('Europe/Kiev')).replace(hour=0, minute=0, second=0,
                                                                        microsecond=0) + timedelta(days=-20000)
@@ -102,6 +106,7 @@ def handle_storage():
         print("Errors", error)
 
 
+# Required main method for running lambda in AWS
 def lambda_handler(event=None, context=None):
     """
     Main asw lambda_handler

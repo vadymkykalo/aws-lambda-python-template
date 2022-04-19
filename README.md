@@ -1,8 +1,8 @@
-# AWS-Lambda-function template  (transfer data from POSTGRES to CLICKHOUSE) #
+## AWS-lambda-function template ##
 
 ### What is this repository for? ###
 
-* Running lambda function in AWS, transfer data from POSTGRES to CLICKHOUSE, you can schedule the launch of the script to transfer the data
+* Running python lambda function in AWS, transfer data from POSTGRES to CLICKHOUSE, you can schedule the launch of the script to transfer the data
 
 
 ### Repository structure ###
