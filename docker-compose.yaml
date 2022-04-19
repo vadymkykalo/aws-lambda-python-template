@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+  python:
+    build: ./
+    env_file: ./.env
+    volumes:
+      - .:/usr/src/app/
+
+  postgres:
+    build: ./docker/postgres/
+    ports:
+      - "5488:5432"
+    volumes:
+      - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=test_db_dev
+    restart: on-failure
+
+  clickhouse:
+    container_name: 'clickhouse'
+    image: yandex/clickhouse-server
+    restart: always
+    volumes:
+      - ./docker/clickhouse/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./docker/clickhouse/users.xml:/etc/clickhouse-server/users.xml
+    ports:
+      - "8123:8123"
