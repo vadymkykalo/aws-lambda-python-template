@@ -20,7 +20,6 @@ services:
     restart: on-failure
 
   clickhouse:
-    container_name: 'clickhouse'
     image: yandex/clickhouse-server
     restart: always
     volumes:

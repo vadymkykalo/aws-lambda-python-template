@@ -1,8 +1,5 @@
 import psycopg2.extras
-import pytz
-from datetime import datetime, timedelta
 import psycopg2.extras
-from psycopg2 import Error
 import os
 from infi.clickhouse_orm import Database
 import time
@@ -65,53 +62,21 @@ def __get_clickhouse_client() -> Database:
     return clickhouse_db
 
 
-# modify this methods (Optional method)
-def handle_storage():
-    start_date = datetime.now(tz=pytz.timezone('Europe/Kiev')).replace(hour=0, minute=0, second=0,
-                                                                       microsecond=0) + timedelta(days=-20000)
-    end_date = datetime.now(tz=pytz.timezone('Europe/Kiev')).replace(hour=0, minute=0, second=0,
-                                                                     microsecond=0) + timedelta(days=-1)
-
-    print('start_date - {0}'.format(start_date))
-    print('end_date - {0}'.format(end_date))
-    try:
-        pg = __get_postgres_client()
-        ch = __get_clickhouse_client()
-
-        offset = 0
-        limit = BATCH_SIZE
-        while True:
-
-            sql = "SELECT t.id AS id, t.name AS name, t.created_on AS created_on FROM " \
-                  "test AS ur WHERE t.created_on >= %s AND t.created_on < %s " \
-                  "ORDER BY t.created_on OFFSET %s LIMIT %s "
-
-            pg.execute(sql, (start_date, end_date, offset, limit))
-            pg_result: list = pg.fetchall()
-            
-            print("PG Results: %s" % len(pg_result))
-
-            for item in pg_result:
-                id = item['id']
-                name = item['name']
-                created_on = item['created_on']
-
-                # TODO move data from POSTGRES to CLICKHOUSE
-
-            offset = offset + BATCH_SIZE
-
-
-        pg.close()
-    except (Exception, Error) as error:
-        print("Errors", error)
-
-
 # Required main method for running lambda in AWS
 def lambda_handler(event=None, context=None):
     """
     Main asw lambda_handler
     """
-    handle_storage()
+    # TODO move data from POSTGRES to CLICKHOUSE
+    # try:
+    #     pg = __get_postgres_client()
+    #     ch = __get_clickhouse_client()
+    #
+    #
+    #     pg.close()
+    # except (Exception, Error) as error:
+    #     print("Errors", error)
+    pass
 
 
 if __name__ == '__main__':

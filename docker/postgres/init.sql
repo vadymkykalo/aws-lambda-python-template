@@ -3,11 +3,9 @@
 
 CREATE TABLE public.test_tester
 (
-    id                     uuid                                         not null
-        constraint test_tester_pkey
-            primary key,
-    name              text                                         not null,
-    created_on             timestamp with time zone                     not null
+    id uuid not null constraint test_tester_pkey primary key,
+    name text not null,
+    created_on timestamp with time zone not null
 );
 
 -- init table

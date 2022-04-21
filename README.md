@@ -15,8 +15,6 @@
 * `docker-compose.yaml` - for testing environment (docker)
 * `Dockerfile` - for testing environment (docker)
 * `models.py` - models file
-* How to run tests
-* Deployment instructions
 
 ### Create zip archive ###
 

@@ -36,11 +36,6 @@ bash() {
     docker-compose run --rm python bash
 }
 
-unit() {
-    message "Run unittest python script"
-    docker-compose run --rm python python -m unittest -v report_ubki_test.py
-}
-
 python() {
     message "Run unittest python script"
     docker-compose run --rm python python "$@"

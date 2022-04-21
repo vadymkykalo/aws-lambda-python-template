@@ -1,7 +1,5 @@
 FROM python:3.8-slim
 
-MAINTAINER SosOrg
-
 RUN mkdir -p /usr/src/app/
 
 COPY requirements.txt /usr/src/app/
